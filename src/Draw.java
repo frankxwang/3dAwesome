@@ -8,7 +8,15 @@ public class Draw {
 	public static int W = 1000;
 	public static int H = 1000;
 	
-	private void DoStuff() {
+	/*private void DoStuff() {
+		
+	}*/
+	Draw() {
+//		vecs.add(new Vec3(500, 250, 0));
+//		((Vec3)vecs.get(0)).Rotate("z", new Vec3(H/2, W/2, 0), -90);
+//		System.out.println(((Vec3)vecs.get(0)).x + " " + ((Vec3)vecs.get(0)).y + " " + ((Vec3)vecs.get(0)).z);
+		vecs = Vec3.getCube(new Vec3(W/2, H/2, 0), 100);
+		//DoStuff();
 		JFrame frame = new JFrame();
 		
 		FrameDraw panel = new FrameDraw();
@@ -23,26 +31,26 @@ public class Draw {
 		(panel).paintComponent(panel.getGraphics());
 		
 		frame.pack();
-	}
-	Draw() {
-//		vecs.add(new Vec3(500, 250, 0));
-//		((Vec3)vecs.get(0)).Rotate("z", new Vec3(H/2, W/2, 0), -90);
-//		System.out.println(((Vec3)vecs.get(0)).x + " " + ((Vec3)vecs.get(0)).y + " " + ((Vec3)vecs.get(0)).z);
-		vecs = Vec3.getCube(new Vec3(W/2, H/2, 0), 100);
-		Vec3.rotateArray(vecs, "x", new Vec3(W/2, H/2, 0), 45);
-		//Vec3.rotateArray(vecs, "y", new Vec3(W/2, H/2, 0), 45);
-		DoStuff();
+		while(true){
+			try{Thread.sleep(100);}catch(Exception e){}
+		Vec3.rotateArray(vecs, "x", new Vec3(W/2, H/2, 0),90);
+		//Vec3.rotateArray(vecs, "y", new Vec3(W/2, H/2, 0), 4);
+		(panel).paintComponent(panel.getGraphics());
+		
+		}
 	}
 	class FrameDraw extends JPanel {
-		public static final int MAX_DIST = 100000000;
+		public static final long MAX_DIST = 1000000000l;
 		protected void paintComponent(Graphics g) {
-			int[] a1 = {};
-			int[] a2 = {};
-			int[] a3 = {};
-			int[] a4 = {};
-			int[] a5 = {};
-			int[] a6 = {};
+			g.clearRect(0, 0, W*2, H*2);
+			int[] a1 = {0,4,5,1};
+			int[] a2 = {2,0,1,3};
+			int[] a3 = {4,6,7,5};
+			int[] a4 = {2,6,7,3};
+			int[] a5 = {3,7,5,1};
+			int[] a6 = {2,6,4,0};
 			int[][] arrays = {a1, a2, a3, a4, a5, a6};
+			
 			for (int i = 0; i < vecs.size(); i++) {
 				Vec3 vec = (Vec3) vecs.get(i);
 				g.fillRect((int)(vec.x - (vec.x - W/2)*vec.z/MAX_DIST), (int) (vec.y - (vec.y - H/2)*vec.z/MAX_DIST), 5, 5);
