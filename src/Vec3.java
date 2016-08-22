@@ -12,7 +12,6 @@ public class Vec3 {
 	}
 	
 	public void rotate(String axis, Vec3 point, float deg){
-		deg = (float) Math.toRadians(deg);
 		if(axis.equals("y")){
 			this.z = getX(point.z, this.z, point.x, this.x, deg);
 			this.x = getY(point.z, this.z, point.x, this.x, deg);
