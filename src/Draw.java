@@ -5,7 +5,7 @@ import java.util.*;
 
 public class Draw {
 	static ArrayList vecs = new ArrayList<Vec3>();
-	public static int W = 500;
+	public static int W = 1000;
 	public static int H = 1000;
 	
 	private void DoStuff() {
@@ -29,16 +29,48 @@ public class Draw {
 //		((Vec3)vecs.get(0)).Rotate("z", new Vec3(H/2, W/2, 0), -90);
 //		System.out.println(((Vec3)vecs.get(0)).x + " " + ((Vec3)vecs.get(0)).y + " " + ((Vec3)vecs.get(0)).z);
 		vecs = Vec3.getCube(new Vec3(W/2, H/2, 0), 100);
+		Vec3.rotateArray(vecs, "x", new Vec3(W/2, H/2, 0), 45);
+		//Vec3.rotateArray(vecs, "y", new Vec3(W/2, H/2, 0), 45);
 		DoStuff();
 	}
 	class FrameDraw extends JPanel {
-		public static final int MAX_DIST = 100;
+		public static final int MAX_DIST = 100000000;
 		protected void paintComponent(Graphics g) {
+			int[] a1 = {};
+			int[] a2 = {};
+			int[] a3 = {};
+			int[] a4 = {};
+			int[] a5 = {};
+			int[] a6 = {};
+			int[][] arrays = {a1, a2, a3, a4, a5, a6};
 			for (int i = 0; i < vecs.size(); i++) {
 				Vec3 vec = (Vec3) vecs.get(i);
 				g.fillRect((int)(vec.x - (vec.x - W/2)*vec.z/MAX_DIST), (int) (vec.y - (vec.y - H/2)*vec.z/MAX_DIST), 5, 5);
+				char[] charAr = {Integer.toString(i).charAt(0)};
+				g.drawChars(charAr, 0, 1, (int)(vec.x - (vec.x - W/2)*vec.z/MAX_DIST), (int) (vec.y - (vec.y - H/2)*vec.z/MAX_DIST));
 			}
-			Vec3.rotateArray(vecs, "x", new Vec3(W/2,H/2,0), 90);
+			for(int i=0; i<arrays.length; i++){
+				int[] aInt = arrays[i];
+				int[][] aaInt = getArray(vecs, aInt);
+				g.drawPolygon(aaInt[0], aaInt[1], aInt.length);
+			}
+		}
+		private int[][] getArray(ArrayList vecs, int[] array){
+			int[][] rArray = new int[2][array.length];
+			for(int i=0; i<array.length; i++){
+				int x = (int)((Vec3)(vecs.get(array[i]))).x;
+				int y = (int)((Vec3)(vecs.get(array[i]))).y;
+				int z = (int)((Vec3)(vecs.get(array[i]))).z;
+				rArray[0][i] = getX(x, z);
+				rArray[1][i] = getY(y, z);
+			}
+			return rArray;
+		}
+		private int getX(int x, int z){
+			return (int)(x - (x - W/2)*z/MAX_DIST);
+		}
+		private int getY(int y, int z){
+			return (int)(y - (y - H/2)*z/MAX_DIST);
 		}
 	}
 }
