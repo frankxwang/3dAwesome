@@ -38,6 +38,7 @@ public class Draw {
 				Vec3 vec = (Vec3) vecs.get(i);
 				g.fillRect((int)(vec.x - (vec.x - W/2)*vec.z/MAX_DIST), (int) (vec.y - (vec.y - H/2)*vec.z/MAX_DIST), 5, 5);
 			}
+			Vec3.rotateArray(vecs, "x", new Vec3(W/2,H/2,0), 90);
 		}
 	}
 }
