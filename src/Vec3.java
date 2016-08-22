@@ -11,7 +11,7 @@ public class Vec3 {
 		this.z = z;
 	}
 	
-	public void Rotate(String axis, Vec3 point, float deg){
+	public void rotate(String axis, Vec3 point, float deg){
 		if(axis.equals("y")){
 			this.z = getX(point.z, this.z, point.x, this.x, deg);
 			this.x = getY(point.z, this.z, point.x, this.x, deg);
@@ -44,5 +44,11 @@ public class Vec3 {
 			}
 		}
 		return vecs;
+	}
+	
+	public static void rotateArray(ArrayList vecs, String axis, Vec3 point, float deg) {
+		for (int i = 0; i < vecs.size(); i++) {
+			((Vec3) vecs.get(i)).rotate(axis, point, deg);
+		}
 	}
 }
