@@ -16,15 +16,15 @@ public class Vec3 {
 		if(axis.equals("y")){
 			this.z = getX(point.z, this.z, point.x, this.x, deg);
 			this.x = getY(point.z, this.z, point.x, this.x, deg);
-			System.out.println("hi1");
+			//System.out.println("hi1");
 		}else if(axis.equals("x")){
 			this.y = getX(point.y, this.y, point.z, this.z, deg);
 			this.z = getY(point.y, this.y, point.z, this.z, deg);
-			System.out.println("hi2");
+			//System.out.println("hi2");
 		}else if(axis.equals("z")){
 			this.x = getX(point.x, this.x, point.y, this.y, deg);
 			this.y = getY(point.x, this.x, point.y, this.y, deg);
-			System.out.println("hi3");
+			//System.out.println("hi3");
 		}
 	}
 	public float getX(float ptX, float thX, float ptY, float thY, float deg){
@@ -51,5 +51,8 @@ public class Vec3 {
 		for (int i = 0; i < vecs.size(); i++) {
 			((Vec3) vecs.get(i)).rotate(axis, point, deg);
 		}
+	}
+	public void print(){
+		System.out.println("X: " + x + " Y: " + y + " Z: " + z);
 	}
 }
