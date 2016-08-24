@@ -54,11 +54,11 @@ public class Draw {
 			for (int i = 0; i < vecs.size(); i++) {
 				Vec3 vec = (Vec3) vecs.get(i);
 				vec.print();
-				System.out.println("/n/n");
 				g.fillRect((int)(vec.x - (vec.x - W/2)*vec.z/MAX_DIST), (int) (vec.y - (vec.y - H/2)*vec.z/MAX_DIST), 5, 5);
 				char[] charAr = {Integer.toString(i).charAt(0)};
 				g.drawChars(charAr, 0, 1, (int)(vec.x - (vec.x - W/2)*vec.z/MAX_DIST), (int) (vec.y - (vec.y - H/2)*vec.z/MAX_DIST));
 			}
+			System.out.println("\n\n");
 			for(int i=0; i<arrays.length; i++){
 				int[] aInt = arrays[i];
 				int[][] aaInt = getArray(vecs, aInt);
