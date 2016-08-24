@@ -31,17 +31,16 @@ public class Draw {
 		(panel).paintComponent(panel.getGraphics());
 		
 		frame.pack();
-		Vec3.rotateArray(vecs, "y", new Vec3(W/2, H/2, 0),45);
 		while(true){
 			try{Thread.sleep(100);}catch(Exception e){}
-			Vec3.rotateArray(vecs, "x", new Vec3(W/2, H/2, 0),10);
+		Vec3.rotateArray(vecs, "x", new Vec3(W/2, H/2, 0),90);
 		//Vec3.rotateArray(vecs, "y", new Vec3(W/2, H/2, 0), 4);
 		(panel).paintComponent(panel.getGraphics());
 		
 		}
 	}
 	class FrameDraw extends JPanel {
-		public static final long MAX_DIST = 100000000;
+		public static final long MAX_DIST = 1000000000l;
 		protected void paintComponent(Graphics g) {
 			g.clearRect(0, 0, W*2, H*2);
 			int[] a1 = {0,4,5,1};
@@ -54,9 +53,9 @@ public class Draw {
 			
 			for (int i = 0; i < vecs.size(); i++) {
 				Vec3 vec = (Vec3) vecs.get(i);
-				g.fillRect((getX((int)vec.x, (int)vec.z)), getX((int)vec.y, (int)vec.z), 5, 5);
+				g.fillRect((int)(vec.x - (vec.x - W/2)*vec.z/MAX_DIST), (int) (vec.y - (vec.y - H/2)*vec.z/MAX_DIST), 5, 5);
 				char[] charAr = {Integer.toString(i).charAt(0)};
-				g.drawChars(charAr, 0, 1, (getX((int)vec.x, (int)vec.z)), getY((int)vec.y, (int)vec.z));
+				g.drawChars(charAr, 0, 1, (int)(vec.x - (vec.x - W/2)*vec.z/MAX_DIST), (int) (vec.y - (vec.y - H/2)*vec.z/MAX_DIST));
 			}
 			for(int i=0; i<arrays.length; i++){
 				int[] aInt = arrays[i];
