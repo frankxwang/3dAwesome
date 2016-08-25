@@ -33,14 +33,14 @@ public class Draw {
 		frame.pack();
 		while(true){
 			try{Thread.sleep(100);}catch(Exception e){}
-		Vec3.rotateArray(vecs, "x", new Vec3(W/2, H/2, 0),90);
+		//Vec3.rotateArray(vecs, "x", new Vec3(W/2, H/2, 0),90);
 		//Vec3.rotateArray(vecs, "y", new Vec3(W/2, H/2, 0), 4);
 		(panel).paintComponent(panel.getGraphics());
 		
 		}
 	}
 	class FrameDraw extends JPanel {
-		public static final long MAX_DIST = 100l;
+		public static final long MAX_DIST = 1000l;
 		protected void paintComponent(Graphics g) {
 			g.clearRect(0, 0, W*2, H*2);
 			int[] a1 = {0,4,5,1};
