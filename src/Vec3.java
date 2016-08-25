@@ -14,26 +14,49 @@ public class Vec3 {
 	public void rotate(String axis, Vec3 point, float deg){
 		deg = (float) Math.toRadians(deg);
 		if(axis.equals("y")){
-			this.z = getX(point.z, this.z, point.x, this.x, deg);
-			this.x = getY(point.z, this.z, point.x, this.x, deg);
+			float[] coords = getCoords(point.z, this.z, point.x, this.x, deg);
+			this.z = coords[0];
+			this.x = coords[1];
+//			this.z = getX(point.z, this.z, point.x, this.x, deg);
+//			this.x = getY(point.z, this.z, point.x, this.x, deg);
 			//System.out.println("hi1");
 		}else if(axis.equals("x")){
-			this.y = getX(point.y, this.y, point.z, this.z, deg);
-			this.z = getY(point.y, this.y, point.z, this.z, deg);
+			float[] coords = getCoords(point.y, this.y, point.z, this.z, deg);
+			this.y = coords[0];
+			this.z = coords[1];
+//			this.y = getX(point.y, this.y, point.z, this.z, deg);
+//			this.z = getY(point.y, this.y, point.z, this.z, deg);
 			//System.out.println("hi2");
 		}else if(axis.equals("z")){
-			this.x = getX(point.x, this.x, point.y, this.y, deg);
-			this.y = getY(point.x, this.x, point.y, this.y, deg);
+			float[] coords = getCoords(point.x, this.x, point.y, this.y, deg);
+			this.x = coords[0];
+			this.y = coords[1];
+//			this.x = getX(point.x, this.x, point.y, this.y, deg);
+//			this.y = getY(point.x, this.x, point.y, this.y, deg);
 			//System.out.println("hi3");
 		}
 	}
-	public float getX(float ptX, float thX, float ptY, float thY, float deg){
-		return (float) ((ptX - thX)*Math.cos(deg) - (ptY - thY)*Math.sin(deg) + ptX);
+//	private float getX(float ptX, float thX, float ptY, float thY, float deg){
+//		return (float) ((ptX - thX)*Math.cos(deg) - (ptY - thY)*Math.sin(deg) + ptX);
+//	}
+//	private float getY(float ptX, float thX, float ptY, float thY, float deg){
+//		return (float) ((ptY - thY)*Math.cos(deg) + (ptX - thX)*Math.sin(deg) + ptY);
+//	}
+	private float[] getCoords(float ptX, float thX, float ptY, float thY, float deg){
+//		float angle = (float) (deg * (Math.PI/180));
+//		float angle = (float)Math.toRadians(deg);
+		float angle = deg;
+		float cos = (float) Math.cos(angle);
+		float sin = (float) Math.sin(angle);
+		float x = cos*(thX-ptX) - sin*(thY-ptY) + ptX;
+		float y = sin*(thX-ptX) + cos*(thY-ptY) + ptY;
+		float[] coords = {x,y};
+		return coords;
 	}
-	public float getY(float ptX, float thX, float ptY, float thY, float deg){
-		return (float) ((ptY - thY)*Math.cos(deg) + (ptX - thX)*Math.sin(deg) + ptY);
-	}
-	
+//	angle = (angle ) * (Math.PI/180); // Convert to radians
+//	var rotatedX = Math.cos(angle) * (point.x - center.x) - Math.sin(angle) * (point.y-center.y) + center.x;
+//	var rotatedY = Math.sin(angle) * (point.x - center.x) + Math.cos(angle) * (point.y - center.y) + center.y;
+//	
 	public static ArrayList getCube(Vec3 center, float side){
 		ArrayList vecs = new ArrayList<Vec3>();
 		float s = side/2;
@@ -52,6 +75,19 @@ public class Vec3 {
 			((Vec3) vecs.get(i)).rotate(axis, point, deg);
 		}
 	}
+	
+	public void translate(Vec3 vec){
+		this.x += vec.x;
+		this.y += vec.y;
+		this.z += vec.z;
+	}
+	
+	public static void translateArray(ArrayList vecs, Vec3 vec) {
+		for (int i = 0; i < vecs.size(); i++) {
+			((Vec3) vecs.get(i)).translate(vec);
+		}
+	}
+	
 	public void print(){
 		System.out.println("X: " + x + " Y: " + y + " Z: " + z);
 	}
