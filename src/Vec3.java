@@ -88,6 +88,14 @@ public class Vec3 {
 		}
 	}
 	
+	public static Vec3 midpoint(Vec3 vec1, Vec3 vec2){
+		vec1.translate(vec2);
+		vec1.x /= 2;
+		vec1.y /= 2;
+		vec1.z /= 2;
+		return vec1;
+	}
+	
 	public void print(){
 		System.out.println("X: " + x + " Y: " + y + " Z: " + z);
 	}
