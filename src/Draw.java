@@ -48,7 +48,7 @@ public class Draw {
 	}
 	
 	class FrameDraw extends JPanel {
-		public static final long MAX_DIST = 500l;
+		public static final long MAX_DIST = 5000l;
 		protected void paintComponent(Graphics g) {
 			g.clearRect(0, 0, W*2, H*2);
 			int[] a1 = {0,4,5,1};
@@ -58,6 +58,8 @@ public class Draw {
 			int[] a5 = {3,7,5,1};
 			int[] a6 = {2,6,4,0};
 			int[][] arrays = {a1, a2, a3, a4, a5, a6};
+			
+//			Arrays.sort(arrays, (a1, a2) -> );
 			
 			g.setColor(Color.red);
 			drawPoint(CENTER, g);
@@ -72,22 +74,38 @@ public class Draw {
 				g.drawChars(charAr, 0, 1, getX(vec.x, vec.z), getY(vec.y, vec.z));
 			}
 			System.out.println("\n\n");
-			for(int i=0; i<arrays.length; i++){
-				int[] aInt = arrays[i];
-				int[][] aaInt = getArray(vecs, aInt);
-				g.drawPolygon(aaInt[0], aaInt[1], aInt.length);
-			}
+//			for(int i=0; i<arrays.length; i++){
+//				int[] aInt = arrays[i];
+//				int[][] aaInt = getArray(vecs, aInt);
+//				g.drawPolygon(aaInt[0], aaInt[1], aInt.length);
+//			}
+			draw3d(arrays, g);
 		}
+//		private Integer getZInt(int[] a){
+//			return Vec3.midpoint((Vec3)vecs.get(a[0]), (Vec3)vecs.get(a[2]));
+//		}
 		private int[][] getArray(ArrayList vecs, int[] array){
 			int[][] rArray = new int[2][array.length];
+			
 			for(int i=0; i<array.length; i++){
-				int x = (int)((Vec3)(vecs.get(array[i]))).x;
-				int y = (int)((Vec3)(vecs.get(array[i]))).y;
-				int z = (int)((Vec3)(vecs.get(array[i]))).z;
+				Vec3 vec = (Vec3)(vecs.get(array[i]));
+				int x = (int)vec.x;
+				int y = (int)vec.y;
+				int z = (int)vec.z;
 				rArray[0][i] = getX(x, z);
 				rArray[1][i] = getY(y, z);
 			}
 			return rArray;
+		}
+		private void draw3d(int[][] arrays, Graphics g){
+			for(int i=0; i<arrays.length; i++){
+				int[] aInt = arrays[i];
+				int[][] aaInt = getArray(vecs, aInt);
+				g.setColor(Color.gray);
+				g.fillPolygon(aaInt[0], aaInt[1], aInt.length);
+				g.setColor(Color.black);
+				g.drawPolygon(aaInt[0], aaInt[1], aInt.length);
+			}
 		}
 		private void drawPoint(Vec3 vec, Graphics g){
 			g.fillRect(getX(vec.x, vec.z), getY(vec.y, vec.z), 5, 5);
@@ -97,6 +115,35 @@ public class Draw {
 		}
 		private int getY(float y, float z){
 			return (int)(y - (y - H/2)*z/MAX_DIST);
+		}
+		private void sortFaces(int[][] arrays){
+
+			int[] VecsMidZ = new int[arrays.length];
+			for(int i=0; i<arrays.length; i++){
+				int[] iArray = arrays[i];
+//				VecsMidZ[i] = (int)(Vec3.midpoint((Vec3)(vecs.get(iArray[0])), (Vec3)(vecs.get(iArray[2]))).z*10) + i;
+//				VecsMidZ[i] = ((int)(Vec3.midpoint((Vec3)(vecs.get(iArray[0])), (Vec3)(vecs.get(iArray[0]))).z)) * 10 + i;
+
+				VecsMidZ[i] = ((int) ((Vec3)(vecs.get(iArray[0]))).z);
+				VecsMidZ[i] *= 10;
+				VecsMidZ[i] += i;
+			}
+			Arrays.sort(VecsMidZ);
+			int[] sorted = new int[arrays.length];
+			int[][] temp = new int[arrays.length][arrays[0].length];
+			for(int i=0; i<arrays.length; i++){
+				for(int j=0; j<arrays[0].length; j++){
+					temp[i][j] = arrays[i][j];
+				}
+			}
+//			temp = arrays;
+			
+			for(int i=0; i<arrays.length; i++){
+				int mod = VecsMidZ[i]%10;
+				if (mod<0) mod += 10;
+				System.out.println(mod);
+				arrays[i] = temp[mod];
+			}
 		}
 	}
 }
