@@ -1,6 +1,13 @@
 import java.util.ArrayList;
 
 public class Vec3 {
+	public static final Vec3 UP = new Vec3(0, -1, 0);
+	public static final Vec3 DOWN = new Vec3(0, 1, 0);
+	public static final Vec3 LEFT = new Vec3(-1, 0, 0);
+	public static final Vec3 RIGHT = new Vec3(1, 0, 0);
+	public static final Vec3 FORWARD = new Vec3(0, 0, -1);
+	public static final Vec3 BACKWARD = new Vec3(0, 0, 1);
+	
 	public float x;
 	public float y;
 	public float z;
@@ -74,6 +81,14 @@ public class Vec3 {
 		for (int i = 0; i < vecs.size(); i++) {
 			((Vec3) vecs.get(i)).rotate(axis, point, deg);
 		}
+	}
+	
+	public Vec3 multiply(float m){
+		Vec3 vec = new Vec3(this.x, this.y, this.z);
+		vec.x *= m;
+		vec.y *= m;
+		vec.z *= m;
+		return vec;
 	}
 	
 	public void translate(Vec3 vec){

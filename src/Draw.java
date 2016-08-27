@@ -227,7 +227,9 @@ public class Draw {
 		}
 		@Override
 		public void keyPressed(KeyEvent e) {
-			if(e.getKeyCode() == KeyEvent.VK_RIGHT){
+			int keyNum = e.getKeyCode();
+			char keyChar = e.getKeyChar();
+			if(keyNum == KeyEvent.VK_RIGHT){
 				if(rotMode == "x"){
 					xRot += 1;
 				}else if(rotMode == "y"){
@@ -235,7 +237,7 @@ public class Draw {
 				}else if(rotMode == "z"){
 					zRot += 1;
 				}
-			}else if(e.getKeyCode() == KeyEvent.VK_LEFT){
+			}else if(keyNum == KeyEvent.VK_LEFT){
 				if(rotMode == "x"){
 					xRot -= 1;
 				}else if(rotMode == "y"){
@@ -243,6 +245,24 @@ public class Draw {
 				}else if(rotMode == "z"){
 					zRot -= 1;
 				}
+			}
+			if(keyChar == '-'){
+				Vec3.dilateArray(vecs, CENTER, 0.99f);
+			}else if(keyChar == '='){
+				Vec3.dilateArray(vecs, CENTER, 1.01f);
+			}
+			if(keyChar == 'w'){
+				Vec3.translateArray(vecs, Vec3.UP.multiply(5));
+			}else if(keyChar == 's'){
+				Vec3.translateArray(vecs, Vec3.DOWN.multiply(5));
+			}else if(keyChar == 'a'){
+				Vec3.translateArray(vecs, Vec3.LEFT.multiply(5));
+			}else if(keyChar == 'd'){
+				Vec3.translateArray(vecs, Vec3.RIGHT.multiply(5));
+			}else if(keyChar == 'q'){
+				Vec3.translateArray(vecs, Vec3.FORWARD.multiply(5));
+			}else if(keyChar == 'e'){
+				Vec3.translateArray(vecs, Vec3.BACKWARD.multiply(5));
 			}
 		}
 		@Override
