@@ -55,7 +55,7 @@ public class Draw {
 			Vec3.rotateArray(vecs, "z", CENTER, 3);
 			Vec3.rotateArray(vecs, "y", CENTER, 3);
 			Vec3.rotateArray(vecs, "x", CENTER, 3);
-			(panel).paintComponent(panel.getGraphics());
+			(panel).repaint();
 		}
 	}
 	
