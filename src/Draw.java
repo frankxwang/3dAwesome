@@ -1,11 +1,10 @@
 import java.awt.*;
-
 import java.awt.event.*;
 import javax.swing.*;
 import java.util.*;
 import java.util.Timer;
-
 public class Draw {
+	int frameCount = 0;
 	public static int xRot = 0;
 	public static int yRot = 0;
 	public static int zRot = 0;
@@ -16,9 +15,6 @@ public class Draw {
 	public static Vec3 CENTER = new Vec3(W/2, H/2, 0);
 	public static FrameDraw panel;
 	public static JLabel label;
-	/*private void DoStuff() {
-		
-	}*/
 	Draw() {
 //		vecs.add(new Vec3(500, 250, 0));
 //		((Vec3)vecs.get(0)).Rotate("z", new Vec3(H/2, W/2, 0), -90);
@@ -57,7 +53,7 @@ public class Draw {
 //		
 //		}
 		Timer t = new Timer();
-		t.schedule(new DoStuff(), 0, 100);
+		t.schedule(new DoStuff(), 0, 30);
 	}
 	class DoStuff extends TimerTask{
 		@Override
@@ -66,7 +62,7 @@ public class Draw {
 			Vec3.rotateArray(vecs, "x", CENTER, xRot);
 			Vec3.rotateArray(vecs, "y", CENTER, yRot);
 			Vec3.rotateArray(vecs, "z", CENTER, zRot);
-			
+			frameCount ++;
 			label.setText("Mode: " + rotMode + " X:" + xRot + ", Y:" + yRot + ", Z:" + zRot);
 			
 			(panel).repaint();
@@ -150,11 +146,29 @@ public class Draw {
 			}
 			return rArray;
 		}
+		
 		private void draw3d(int[][] arrays, Graphics g){
 			for(int i=0; i<arrays.length; i++){
 				int[] aInt = arrays[i];
 				int[][] aaInt = getArray(vecs, aInt);
-				g.setColor(Color.gray);
+				if(frameCount == 1){
+				g.setColor(Color.black);
+				}else if (frameCount == 2){
+					g.setColor(Color.red);
+				}else if (frameCount == 3){
+					g.setColor(Color.orange);
+				}else if (frameCount == 4){
+					g.setColor(Color.yellow);
+				}else if (frameCount == 5){
+					g.setColor(Color.green);
+				}else if (frameCount == 6){
+					g.setColor(Color.blue);
+				}else if (frameCount == 7){
+					g.setColor(Color.magenta);
+				}
+				else{
+					frameCount = 0;
+				}
 				g.fillPolygon(aaInt[0], aaInt[1], aInt.length);
 				g.setColor(Color.black);
 				g.drawPolygon(aaInt[0], aaInt[1], aInt.length);
