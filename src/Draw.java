@@ -6,11 +6,16 @@ import java.util.*;
 import java.util.Timer;
 
 public class Draw {
+	public static int xRot = 0;
+	public static int yRot = 0;
+	public static int zRot = 0;
+	public static String rotMode = "x";
 	static ArrayList vecs = new ArrayList<Vec3>();
 	public static int W = 1000;
 	public static int H = 1000;
 	public static Vec3 CENTER = new Vec3(W/2, H/2, 0);
 	public static FrameDraw panel;
+	public static JLabel label;
 	/*private void DoStuff() {
 		
 	}*/
@@ -20,7 +25,13 @@ public class Draw {
 //		System.out.println(((Vec3)vecs.get(0)).x + " " + ((Vec3)vecs.get(0)).y + " " + ((Vec3)vecs.get(0)).z);
 		vecs = Vec3.getCube(CENTER, 100);
 		//DoStuff();
+		
 		JFrame frame = new JFrame();
+		
+		label = new JLabel("X: 0, Y:0, Z:0");
+		label.setOpaque(true);
+	    label.setBackground(Color.GRAY);
+	    label.setForeground(Color.WHITE);
 		
 		panel = new FrameDraw();
 		panel.setSize(new Dimension(W, H));
@@ -28,8 +39,9 @@ public class Draw {
 		frame.setPreferredSize(new Dimension(W, H));
 		frame.setVisible(true);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		frame.setLayout(new GridLayout(1,1));
-		frame.add(panel);
+		frame.setLayout(new BorderLayout());
+		frame.add(label, BorderLayout.NORTH);
+		frame.add(panel, BorderLayout.CENTER);
 		
 		(panel).paintComponent(panel.getGraphics());
 		
@@ -46,16 +58,17 @@ public class Draw {
 //		}
 		Timer t = new Timer();
 		t.schedule(new DoStuff(), 0, 100);
-
-		
 	}
 	class DoStuff extends TimerTask{
 		@Override
 		public void run() {
-			Vec3.dilateArray(vecs, CENTER, 0.99f);
-			Vec3.rotateArray(vecs, "z", CENTER, 3);
-			Vec3.rotateArray(vecs, "y", CENTER, 3);
-			Vec3.rotateArray(vecs, "x", CENTER, 3);
+			//Vec3.dilateArray(vecs, CENTER, 0.99f);
+			Vec3.rotateArray(vecs, "x", CENTER, xRot);
+			Vec3.rotateArray(vecs, "y", CENTER, yRot);
+			Vec3.rotateArray(vecs, "z", CENTER, zRot);
+			
+			label.setText("Mode: " + rotMode + " X:" + xRot + ", Y:" + yRot + ", Z:" + zRot);
+			
 			(panel).repaint();
 		}
 	}
@@ -64,8 +77,11 @@ public class Draw {
 		try{Thread.sleep(m);}catch(Exception e){}
 	}
 	
-	class FrameDraw extends JPanel {
+	class FrameDraw extends JPanel implements KeyListener{
 		public static final long MAX_DIST = 5000l;
+		FrameDraw(){
+			addKeyListener(this);
+		}
 		protected void paintComponent(Graphics g) {
 			g.clearRect(0, 0, W*2, H*2);
 			int[] a1 = {0,4,5,1};
@@ -193,6 +209,44 @@ public class Draw {
 			}
 			
 			return arrays;
+		}
+		public void addNotify() {
+	        super.addNotify();
+	        requestFocus();
+	    }
+		@Override
+		public void keyTyped(KeyEvent e) {
+			System.out.println("HUEONGIWVWOGOIJGWKLMFCJEUWIHBHUBWIHFHOBHWROFHJBKWNOENFJFONJKW NOJFNKE WNJOFNJK EWJIODSJEWO");
+			if(e.getKeyChar() == 'x'){
+				rotMode = "x";
+			}else if(e.getKeyChar() == 'y'){
+				rotMode = "y";
+			}else if(e.getKeyChar() == 'z'){
+				rotMode = "z";
+			}
+		}
+		@Override
+		public void keyPressed(KeyEvent e) {
+			if(e.getKeyCode() == KeyEvent.VK_RIGHT){
+				if(rotMode == "x"){
+					xRot += 1;
+				}else if(rotMode == "y"){
+					yRot += 1;
+				}else if(rotMode == "z"){
+					zRot += 1;
+				}
+			}else if(e.getKeyCode() == KeyEvent.VK_LEFT){
+				if(rotMode == "x"){
+					xRot -= 1;
+				}else if(rotMode == "y"){
+					yRot -= 1;
+				}else if(rotMode == "z"){
+					zRot -= 1;
+				}
+			}
+		}
+		@Override
+		public void keyReleased(KeyEvent e) {
 		}
 	}
 }
