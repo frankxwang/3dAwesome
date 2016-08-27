@@ -88,6 +88,16 @@ public class Vec3 {
 		}
 	}
 	
+	public void dilate(Vec3 vec, float scale){
+		translate(new Vec3((this.x - vec.x)*(scale-1), (this.y - vec.y)*(scale-1), (this.z - vec.z)*(scale-1)));
+	}
+	
+	public static void dilateArray(ArrayList vecs, Vec3 vec, float scale) {
+		for (int i = 0; i < vecs.size(); i++) {
+			((Vec3) vecs.get(i)).dilate(vec, scale);
+		}
+	}
+	
 	public static Vec3 midpoint(Vec3 vec1, Vec3 vec2){
 		vec1.translate(vec2);
 		vec1.x /= 2;

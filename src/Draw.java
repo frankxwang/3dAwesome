@@ -52,6 +52,7 @@ public class Draw {
 	class DoStuff extends TimerTask{
 		@Override
 		public void run() {
+			Vec3.dilateArray(vecs, CENTER, 0.99f);
 			Vec3.rotateArray(vecs, "z", CENTER, 3);
 			Vec3.rotateArray(vecs, "y", CENTER, 3);
 			Vec3.rotateArray(vecs, "x", CENTER, 3);
