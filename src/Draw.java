@@ -1,13 +1,16 @@
 import java.awt.*;
+
 import java.awt.event.*;
 import javax.swing.*;
 import java.util.*;
+import java.util.Timer;
 
 public class Draw {
 	static ArrayList vecs = new ArrayList<Vec3>();
 	public static int W = 1000;
 	public static int H = 1000;
 	public static Vec3 CENTER = new Vec3(W/2, H/2, 0);
+	public static FrameDraw panel;
 	/*private void DoStuff() {
 		
 	}*/
@@ -19,7 +22,7 @@ public class Draw {
 		//DoStuff();
 		JFrame frame = new JFrame();
 		
-		FrameDraw panel = new FrameDraw();
+		panel = new FrameDraw();
 		panel.setSize(new Dimension(W, H));
 		
 		frame.setPreferredSize(new Dimension(W, H));
@@ -32,14 +35,27 @@ public class Draw {
 		
 		frame.pack();
 		Vec3.translateArray(vecs, new Vec3(0, -150, 0));
-		while(true){
-			sleep(100);
+//		while(true){
+//			sleep(100);
+//			Vec3.rotateArray(vecs, "z", CENTER, 3);
+//			Vec3.rotateArray(vecs, "y", CENTER, 3);
+//			Vec3.rotateArray(vecs, "x", CENTER, 3);
+//		//Vec3.rotateArray(vecs, "y", new Vec3(W/2, H/2, 0), 4);
+//			(panel).paintComponent(panel.getGraphics());
+//		
+//		}
+		Timer t = new Timer();
+		t.schedule(new DoStuff(), 0, 100);
+
+		
+	}
+	class DoStuff extends TimerTask{
+		@Override
+		public void run() {
 			Vec3.rotateArray(vecs, "z", CENTER, 3);
 			Vec3.rotateArray(vecs, "y", CENTER, 3);
 			Vec3.rotateArray(vecs, "x", CENTER, 3);
-		//Vec3.rotateArray(vecs, "y", new Vec3(W/2, H/2, 0), 4);
-		(panel).paintComponent(panel.getGraphics());
-		
+			(panel).paintComponent(panel.getGraphics());
 		}
 	}
 	
@@ -59,7 +75,26 @@ public class Draw {
 			int[] a6 = {2,6,4,0};
 			int[][] arrays = {a1, a2, a3, a4, a5, a6};
 			
-//			Arrays.sort(arrays, (a1, a2) -> );
+			//lambda with arrow thing-a-am-gigs
+//			Arrays.sort(arrays, (aa1, aa2) -> 
+//			((Integer)(int)(Vec3.midpoint((Vec3)vecs.get(aa1[3]),
+//					(Vec3)vecs.get(aa1[1])).z)).compareTo
+//			((Integer)(int)(Vec3.midpoint((Vec3)vecs.get(aa2[3]),
+//					(Vec3)vecs.get(aa2[1])).z)));
+			
+			Arrays.sort(arrays, (aa1, aa2) -> 
+			((Integer)(int)(Vec3.midpoint((Vec3)vecs.get(aa1[0]),
+					(Vec3)vecs.get(aa1[2])).z)).compareTo
+			((Integer)(int)(Vec3.midpoint((Vec3)vecs.get(aa2[0]),
+					(Vec3)vecs.get(aa2[2])).z)));
+			
+			for(int[] i:arrays){
+				System.out.print("{");
+				for(int a:i){
+					System.out.print(((Vec3)vecs.get(a)).z + ",");
+				}
+				System.out.println("}");
+			}
 			
 			g.setColor(Color.red);
 			drawPoint(CENTER, g);
