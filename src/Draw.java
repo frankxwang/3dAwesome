@@ -167,10 +167,7 @@ public class Draw {
 				vec2.x = ((Vec3)vecs.get(arrays[i][2])).x;
 				vec2.y = ((Vec3)vecs.get(arrays[i][2])).y;
 				vec2.z = ((Vec3)vecs.get(arrays[i][2])).z;
-				vec1.translate(vec2);
-				vec1.x /= 2;
-				vec1.y /= 2;
-				vec1.z /= 2;
+				Vec3.midpoint(vec1, vec2);
 				
 				VecsMidZ[i]=(Integer)(int) vec1.z;
 //				VecsMidZ[i] = ((int) ((Vec3)(vecs.get(iArray[0]))).z);
