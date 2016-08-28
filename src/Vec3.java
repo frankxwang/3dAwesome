@@ -64,8 +64,8 @@ public class Vec3 {
 //	var rotatedX = Math.cos(angle) * (point.x - center.x) - Math.sin(angle) * (point.y-center.y) + center.x;
 //	var rotatedY = Math.sin(angle) * (point.x - center.x) + Math.cos(angle) * (point.y - center.y) + center.y;
 //	
-	public static ArrayList getCube(Vec3 center, float side){
-		ArrayList vecs = new ArrayList<Vec3>();
+	public static ArrayList<Vec3> getCube(Vec3 center, float side){
+		ArrayList<Vec3> vecs = new ArrayList<Vec3>();
 		float s = side/2;
 		for(int i=-1; i<=1; i+=2){
 			for(int j=-1; j<=1; j+=2){
@@ -77,7 +77,7 @@ public class Vec3 {
 		return vecs;
 	}
 	
-	public static void rotateArray(ArrayList vecs, String axis, Vec3 point, float deg) {
+	public static void rotateArray(ArrayList<?> vecs, String axis, Vec3 point, float deg) {
 		for (int i = 0; i < vecs.size(); i++) {
 			((Vec3) vecs.get(i)).rotate(axis, point, deg);
 		}
@@ -97,7 +97,7 @@ public class Vec3 {
 		this.z += vec.z;
 	}
 	
-	public static void translateArray(ArrayList vecs, Vec3 vec) {
+	public static void translateArray(ArrayList<?> vecs, Vec3 vec) {
 		for (int i = 0; i < vecs.size(); i++) {
 			((Vec3) vecs.get(i)).translate(vec);
 		}
@@ -107,7 +107,7 @@ public class Vec3 {
 		translate(new Vec3((this.x - vec.x)*(scale-1), (this.y - vec.y)*(scale-1), (this.z - vec.z)*(scale-1)));
 	}
 	
-	public static void dilateArray(ArrayList vecs, Vec3 vec, float scale) {
+	public static void dilateArray(ArrayList<?> vecs, Vec3 vec, float scale) {
 		for (int i = 0; i < vecs.size(); i++) {
 			((Vec3) vecs.get(i)).dilate(vec, scale);
 		}

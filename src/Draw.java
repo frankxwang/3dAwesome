@@ -9,7 +9,7 @@ public class Draw {
 	public static int yRot = 0;
 	public static int zRot = 0;
 	public static String rotMode = "x";
-	static ArrayList vecs = new ArrayList<Vec3>();
+	static ArrayList<Vec3> vecs = new ArrayList<Vec3>();
 	public static int W = 1000;
 	public static int H = 1000;
 	public static Vec3 CENTER = new Vec3(W/2, H/2, 0);
@@ -20,6 +20,7 @@ public class Draw {
 //		((Vec3)vecs.get(0)).Rotate("z", new Vec3(H/2, W/2, 0), -90);
 //		System.out.println(((Vec3)vecs.get(0)).x + " " + ((Vec3)vecs.get(0)).y + " " + ((Vec3)vecs.get(0)).z);
 		vecs = Vec3.getCube(CENTER, 100);
+//		vecs = new RectPrism(CENTER, 100, 200, 150);
 		//DoStuff();
 		
 		JFrame frame = new JFrame();
@@ -69,10 +70,12 @@ public class Draw {
 		}
 	}
 	
+	@SuppressWarnings("unused")
 	private static void sleep(int m){
 		try{Thread.sleep(m);}catch(Exception e){}
 	}
 	
+	@SuppressWarnings("serial")
 	class FrameDraw extends JPanel implements KeyListener{
 		public static final long MAX_DIST = 5000l;
 		FrameDraw(){
@@ -133,7 +136,7 @@ public class Draw {
 //		private Integer getZInt(int[] a){
 //			return Vec3.midpoint((Vec3)vecs.get(a[0]), (Vec3)vecs.get(a[2]));
 //		}
-		private int[][] getArray(ArrayList vecs, int[] array){
+		private int[][] getArray(ArrayList<Vec3> vecs, int[] array){
 			int[][] rArray = new int[2][array.length];
 			
 			for(int i=0; i<array.length; i++){
@@ -206,6 +209,7 @@ public class Draw {
 				VecsMidZ[i] += i;
 			}
 			Arrays.sort(VecsMidZ, Collections.reverseOrder());
+			@SuppressWarnings("unused")
 			int[] sorted = new int[arrays.length];
 			int[][] temp = new int[arrays.length][arrays[0].length];
 			for(int i=0; i<arrays.length; i++){
